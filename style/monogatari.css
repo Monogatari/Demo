@@ -1,0 +1,751 @@
+/**
+ * ==============================================
+ * I N D E X
+ * ==============================================
+ * 1) HTML Elements Initial Style
+ * 2) Support Classes
+ * 3) In-Game Elements Styling
+ * 4) Data Notice Styling
+ * 5) Data Components Styling
+ * 6) Data UI Styling
+ * 7) Data Menu Styling
+ * 8) Inputs Styling
+ * 9) Positioning and Distributing Classes
+ * 10) CSS Fixes
+ * 11) Media Queries
+ * ==============================================
+**/
+
+
+/**
+ * ===========================
+ * HTML Elements Initial Style
+ * ===========================
+**/
+
+html {
+	width: auto;
+	overflow-x: hidden;
+	height: 100vh;
+	width: 100vw;
+}
+
+h1,
+h2 {
+	margin: 0;
+	padding: 0.03em;
+	font-size: 7vmax;
+}
+
+h3 {
+	margin: 0;
+	padding: 0.03em;
+}
+
+body {
+	font-family: sans-serif;
+	height: 100vh;
+	width: 100vw;
+	max-height: 100vh;
+	max-width: 100vw;
+	overflow-x: hidden;
+	font-size: 2vmax;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	color: rgba(0, 0, 0, 0.5);
+	background-color: #F7F7F7;
+}
+
+body.light {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+li {
+	list-style-type: none;
+	display: inline-block;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+select {
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+	font-size: inherit;
+}
+
+button {
+	width: 15vmax;
+	height: 5vmax;
+	background: rgba(0, 0, 0, 0.5);
+	-webkit-appearance: none;
+	border: none;
+	outline: none;
+	color: #F7F7F7;
+	font-size: inherit;
+	cursor: pointer;
+}
+
+section div {
+	width: 100vw;
+}
+
+
+/**
+ * ===========================
+ * Support Classes
+ * ===========================
+**/
+
+.background-image {
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.wait,
+.wait * {
+	cursor: wait;
+}
+
+.padded {
+	padding: 2vmax;
+}
+
+.block {
+	display: block;
+}
+
+
+/**
+ * ===========================
+ * In-Game Elements Styling
+ * ===========================
+**/
+
+#game {
+	height: 100vh;
+	max-height: 100vh;
+	max-width: 100vw;
+	overflow: hidden;
+	width: 100vw;
+	display: none;
+}
+
+#game img {
+	position: absolute;
+	-moz-user-select: none;
+	-webkit-user-drag: none;
+	-ms-user-select: none;
+	pointer-events: none;
+	-khtml-user-select: none;
+	-o-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	max-height: 90%;
+}
+
+#game [data-image] {
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+#game [data-character] {
+	bottom: 0;
+	position: absolute;
+	max-width: 100%;
+	max-height: 100%;
+}
+
+
+/**
+ * ===========================
+ * Data Notice Styling
+ * ===========================
+**/
+
+[data-notice].modal {
+	display: none;
+	text-align: center;
+	z-index: 20;
+	background: rgba(0, 0, 0, 0.5);
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+}
+
+[data-notice].modal.active {
+	display: block;
+}
+
+[data-notice] button {
+	display: inline-block;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+[data-notice].modal  > div {
+	top: 50%;
+    left: 50%;
+	-webkit-transform: translate(-50%,-50%);
+	-moz-transform: translate(-50%,-50%);
+	-o-transform: translate(-50%,-50%);
+	-ms-transform: translate(-50%,-50%);
+	position: absolute;
+	padding: 2em;
+	border-radius: 4px;
+	background-color: #fff;
+}
+
+[data-notice].modal  > p {
+	font-size: 2.5vmax;
+}
+
+/**
+ * ===========================
+ * Data Components Styling
+ * ===========================
+**/
+
+[data-component] {
+	display: none;
+}
+
+[data-component="modal"] {
+	position: relative;
+	height: auto;
+	max-height: 70vh;
+	width: 80vw;
+	top: 100%;
+	margin: 0 auto;
+	background: #fff;
+	z-index: 15;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+	-ms-transition: all 0.5s;
+	transition: all 0.5s;
+	overflow-y: scroll;
+	padding: 2vmin;
+	font-size: 1.5vmax;
+	color: rgba(66, 66, 66, 0.9);
+}
+
+[data-component="video"] {
+	position: relative;
+	height: auto;
+	top: 100%;
+	margin: 0 auto;
+	z-index: 2;
+}
+
+[data-component="modal"] img,
+[data-component="modal"] video {
+	max-width: 100%;
+	position: initial !important;
+}
+
+[data-component="modal"].active,
+[data-component="video"].active {
+	display: block;
+}
+
+
+/**
+ * ===========================
+ * Data UI Styling
+ * ===========================
+**/
+
+[data-ui="load-progress"] {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	border: none;
+	margin: 1em auto;
+	display: block;
+	border-radius: 3px;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+	background: transparent;
+	width: 50vw;
+}
+
+[data-ui="load-progress"]::-webkit-progress-bar {
+	background: transparent;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+	border-radius: 3px;
+}
+
+[data-ui="load-progress"]::-webkit-progress-value {
+	background-color: #F16272;
+	border-radius: 3px;
+}
+
+[data-ui="load-progress"]::-moz-progress-bar {
+	background-color: #F16272;
+	border-radius: 3px;
+}
+
+[data-ui="messages"] div {
+	width: auto;
+	padding: 1vmin;
+}
+
+[data-ui="message-content"] {
+	text-align: left;
+	max-width: 100%;
+}
+
+[data-ui="input"] div {
+	width: auto;
+	padding: 1vmin;
+}
+
+[data-ui="input"] input,
+textarea {
+	padding: 1vmin;
+	background: #eee;
+	outline: none;
+	border: none;
+	min-width: 50%;
+	font-size: inherit;
+}
+
+[data-ui="player"] {
+	max-height: 50vh;
+	max-width: 50vw;
+	z-index: 2;
+}
+
+[data-ui="choices"] {
+	display: none;
+	z-index: 11;
+	max-height: 100vh;
+	overflow-y: scroll;
+	height: auto;
+	width: 100vw;
+}
+
+[data-ui="choices"] button {
+	margin: 1em;
+	padding: 0.5em;
+	border-radius: 0.5em;
+	width: auto;
+	height: auto;
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+
+[data-ui="face"] {
+	display: inline-block;
+	float: left;
+	max-height: 20vh !important;
+	position: initial !important;
+}
+
+[data-ui="text"] {
+	background-color: rgba(0, 0, 0, 0.5);
+	min-height: 20vh;
+	max-height: 25vh;
+	overflow-y: scroll;
+	width: 100%;
+	z-index: 10;
+	text-align: left;
+	position: absolute;
+	bottom: 0vh;
+	color: rgb(255, 255, 255);
+}
+
+[data-ui="text"].nvl {
+	height: 100%;
+}
+
+[data-ui="text"] p {
+	display: block;
+	width: 100%;
+	padding: 1vmin;
+	margin: 0;
+}
+
+[data-ui="text"] .fa {
+	width: auto;
+	display: inline-block;
+}
+
+[data-ui="who"] {
+	display: block;
+	width: 100%;
+	padding: 1vmin;
+	margin: 0;
+}
+
+[data-ui='say'] span {
+	padding: 0;
+	margin: 0;
+}
+
+[data-ui="quick-menu"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: auto;
+	padding: 1vmin;
+	margin: 0;
+	color: rgba(255, 255, 255, 0.5);
+	z-index: 3;
+}
+
+[data-ui="quick-menu"].dark {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+[data-ui="quick-menu"] span {
+	display: inline-block;
+	width: auto;
+	font-size: 3.5vmax;
+	margin: 0px 1vmin 0px 1vmin;
+}
+
+[data-ui="quick-menu"] span:hover {
+	color: rgb(255, 255, 255);
+	cursor: pointer;
+}
+
+[data-ui="quick-menu"].dark span:hover {
+	color: rgb(0, 0, 0);
+	cursor: pointer;
+}
+
+[data-ui="slots"],
+[data-ui="settings"] {
+	margin-bottom: 10vmax;
+}
+
+[data-ui="slots"] figure {
+	width: 20vmax;
+	height: auto;
+	background: rgba(0, 0, 0, 0.5);
+	border-radius: 3px;
+	vertical-align: middle;
+	cursor: pointer;
+}
+
+[data-ui="slots"] img {
+	width: 100%;
+}
+
+[data-ui="slots"] figcaption {
+	padding: 1vmax;
+}
+
+[data-ui="slots"] figcaption small {
+	display: block;
+}
+
+[data-ui="centered"] {
+	margin: 0;
+}
+
+[data-ui="particles"] {
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+}
+
+[data-ui="background"] {
+	width: 100vw;
+	height: 100vh;
+}
+
+
+/**
+ * ===========================
+ * Data Menu Styling
+ * ===========================
+**/
+
+[data-menu] {
+	height: 100vh;
+	max-height: 100vh;
+	max-width: 100vw;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	width: 100vw;
+	display: none;
+}
+
+[data-menu='settings'] input,
+[data-menu='settings'] select {
+	margin: 2vmax;
+	background: transparent;
+	color: inherit;
+}
+
+[data-menu="main"] {
+	background-repeat: no-repeat;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+}
+
+[data-menu] button {
+	margin: 2vmin;
+}
+
+[data-menu] button:hover {
+	cursor: pointer;
+}
+
+
+/**
+ * ====================================
+ * Inputs Styling
+ * ====================================
+**/
+
+input[type=range]::-webkit-slider-runnable-track {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]::-moz-range-track {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]::-ms-fill-lower {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]:focus::-ms-fill-lower {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]::-ms-fill-upper {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range]:focus::-ms-fill-upper {
+	cursor: pointer;
+	background: rgba(0, 0, 0, 0.5);
+}
+
+input[type=range].light::-webkit-slider-runnable-track {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light:focus::-webkit-slider-runnable-track {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light::-moz-range-track {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light::-ms-fill-lower {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light:focus::-ms-fill-lower {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light::-ms-fill-upper {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light:focus::-ms-fill-upper {
+	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range] {
+	-webkit-appearance: none;
+	width: 30%;
+	background: transparent;
+	outline: none;
+	height: 2vmin;
+}
+
+
+/**
+ * ====================================
+ * Positioning and Distributing Classes
+ * ====================================
+**/
+
+.vertical * {
+	display: block;
+}
+
+.horizontal * {
+	display: inline-block;
+}
+
+.bottom {
+	position: absolute;
+	bottom: 0;
+	margin: 0;
+}
+
+#game [data-image].bottom {
+	top: auto;
+}
+
+.middle {
+	top: 50%;
+	left: 50%;
+	-webkit-transform: translate(-50%, -50%);
+	-moz-transform: translate(-50%, -50%);
+	-o-transform: translate(-50%, -50%);
+	-ms-transform: translate(-50%, -50%);
+	position: absolute;
+}
+
+.center {
+	margin: 0 auto;
+	left: 0;
+	right: 0;
+}
+
+.left {
+	left: 0;
+}
+
+.right {
+	right: 0;
+}
+
+.align-center {
+	text-align: center;
+}
+
+.align-left {
+	text-align: left;
+}
+
+.align-right {
+	text-align: right;
+}
+
+.vertical.align-center * {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.vertical.align-left * {
+	margin-right: auto;
+}
+
+.vertical.align-right * {
+	margin-left: auto;
+}
+
+
+/**
+ * ================
+ * CSS Fixes
+ * ===============
+**/
+
+*,
+*:before,
+*:after {
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+    background: transparent;
+	width: 5px;
+	height: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2);
+	border-radius: 3px;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 60rem;
+	/*48rem*/
+	width: 95%;
+}
+
+.clearfix:before,
+.clearfix:after {
+	content: " ";
+	display: table;
+}
+
+.clearfix:after {
+	clear: both;
+}
+
+.clearfix {
+	*zoom: 1;
+}
+
+::selection {
+	background: transparent;
+}
+
+::-moz-selection {
+	background: transparent;
+}
+
+
+/**
+ * ====================================
+ * Media Queries
+ * ====================================
+**/
+
+@media (max-width: 35rem) {
+	body {
+		font-size: 3vmax !important;
+	}
+	[data-component="modal"] {
+		font-size: 3vmax !important;
+	}
+	button {
+		width: auto;
+		font-size: 4vmax !important;
+		height: auto;
+		padding: 1vmax;
+	}
+	[data-ui="quick-menu"] span {
+		font-size: 5vmax;
+	}
+
+	[data-ui="load-progress"] {
+		width: 80vw;
+	}
+}
