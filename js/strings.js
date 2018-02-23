@@ -2,13 +2,27 @@
  * ============================================================
  * Translations for the Interface, add as many as you want!
  * ============================================================
+ *
+ * Translators:
+ *
+ * English - Hyuchia <diego@hyuchia.com>
+ * Español - Hyuchia <diego@hyuchia.com>
+ * Français - BakaKiller
+ * 日本語
+ * Nederlands - Natsukeep
  **/
 
-var strings = {
+"use strict";
+
+/* exported strings */
+
+const strings = {
 
 	"English": {
 		"AdvanceHelp": "To advance through the game, press the space key or click.",
 		"Audio": "Audio",
+		"AutoPlay": "Auto",
+		"AutoPlaySpeed": "Autoplay Speed",
 
 		"Back": "Back",
 		"BackButton": "Back.",
@@ -20,6 +34,7 @@ var strings = {
 		"FullScreen": "Full Screen",
 
 		"Help": "Help",
+		"Hide": "Hide",
 		"HideButton": "Hide Text.",
 
 		"iOSAudioWarning": "Audio settings are not supported on iOS.",
@@ -51,8 +66,14 @@ var strings = {
 		"SaveInSlot": "Save in slot",
 		"Settings": "Settings",
 		"SettingsButton": "Open the Settings Screen.",
+		"Show": "Show",
+		"SlotDeletion": "Are you sure you want to delete this slot?",
+		"SlotOverwrite": "Are you sure you want to overwrite this slot?",
 		"Sound": "Sound Volume",
 		"Start": "Start",
+		"Stop": "Stop",
+
+		"TextSpeed": "Text Speed",
 
 		"Voice": "Voice Volume",
 
@@ -62,6 +83,8 @@ var strings = {
 	"Español": {
 		"AdvanceHelp": "Para avanzar en el juego, presiona espacio o haz click.",
 		"Audio": "Audio",
+		"AutoPlay": "Auto",
+		"AutoPlaySpeed": "Velocidad de Juego Automático",
 
 		"Back": "Atrás",
 		"BackButton": "Atrás.",
@@ -73,6 +96,7 @@ var strings = {
 		"FullScreen": "Pantalla Completa",
 
 		"Help": "Ayuda",
+		"Hide": "Ocultar",
 		"HideButton": "Esconder el Texto.",
 
 		"iOSAudioWarning": "Las configuraciones de Audio no están disponibles en iOS.",
@@ -104,8 +128,14 @@ var strings = {
 		"SaveInSlot": "Guardar en ranura",
 		"Settings": "Configuración",
 		"SettingsButton": "Abrir la Pantalla de Configuración.",
+		"Show": "Mostrar",
+		"SlotDeletion": "¿Está seguro de querer eliminar este juego?",
+		"SlotOverwrite": "¿Está seguro de querer Sobreescribir este juego?",
 		"Sound": "Volumen de los Sonidos",
 		"Start": "Comenzar",
+		"Stop": "Detener",
+
+		"TextSpeed": "Velocidad del Texto",
 
 		"Voice": "Volumen de la Voz",
 
@@ -113,11 +143,13 @@ var strings = {
 	},
 
 	"Français": {
-		"AdvanceHelp": "Pour avancer dans le jeu, appuyez sur la touche espace ou cliquez sur.",
+		"AdvanceHelp": "Pour avancer dans le jeu, appuyez sur la touche espace ou cliquez.",
 		"Audio": "Audio",
+		"AutoPlay": "Auto",
+		"AutoPlaySpeed": "Vitesse de lecture automatique",
 
-		"Back": "Retourner",
-		"BackButton": "Retourner.",
+		"Back": "Retour",
+		"BackButton": "Retour.",
 
 		"Cancel": "Annuler",
 		"Close": "Fermer",
@@ -126,23 +158,24 @@ var strings = {
 		"FullScreen": "Plein Écran",
 
 		"Help": "Aide",
+		"Hide": "Cacher",
 		"HideButton": "Cacher le Texte.",
 
 		"iOSAudioWarning": "Les paramètres audio ne sont pas pris en charge par iOS.",
 
 		"Language": "Langue",
 		"Load": "Charger",
-		"LoadAutoSaveSlots": "Jeux Sauvegardés Automatiquement",
+		"LoadAutoSaveSlots": "Parties Enregistrées Automatiquement",
 		"LoadButton": "Ouvrir l'écran de Chargement.",
-		"Loading": "Charge",
-		"LoadingMessage": "Attendez pendant que les fichiers sont chargés.",
-		"LoadSlots": "Jeux Sauvegardés",
-		"LocalStorageWarning": "Le stockage local n'est pas disponible dans ce navigateur.",
+		"Loading": "Chargement",
+		"LoadingMessage": "Veuillez patienter pendant que les fichiers sont chargés.",
+		"LoadSlots": "Parties Sauvegardées",
+		"LocalStorageWarning": "Le stockage local n'est pas disponible sur ce navigateur.",
 
 		"Music": "Volume de la Musique",
 
-		"NoSavedGames": "Pas de jeux sauvegardés.",
-		"NoAutoSavedGames": "Aucun jeu enregistré automatiquement.",
+		"NoSavedGames": "Pas de parties sauvegardées.",
+		"NoAutoSavedGames": "Aucune partie enregistrée automatiquement.",
 
 		"Overwrite": "Écraser",
 
@@ -154,20 +187,28 @@ var strings = {
 
 		"Save": "Sauvegarder",
 		"SaveButon": "Ouvrir l'écran de Sauvegarde.",
-		"SaveInSlot": "Enregistrer dans la fente",
+		"SaveInSlot": "Enregistrer à l'emplacement",
 		"Settings": "Préférences",
 		"SettingsButton": "Ouvrir l'écran des Préférences.",
+		"Show": "Monter",
+		"SlotDeletion": "Êtes-vous sûr de vouloir supprimer cet emplacement ?",
+		"SlotOverwrite": "Êtes vous sûr de vouloir remplacer cet emplacement ?",
 		"Sound": "Volume des Sons",
 		"Start": "Démarrer",
+		"Stop": "Arrêter",
+
+		"TextSpeed": "Vitesse du Texte",
 
 		"Voice": "Volume de la Voix",
 
-		"Windowed": "Fenêtre"
+		"Windowed": "Fenêtré"
 	},
 
 	"日本語": {
 		"AdvanceHelp": "ゲームを進めるためには、スペースキーを押すかクリックします。",
 		"Audio": "オーディオ",
+		"AutoPlay": "",
+		"AutoPlaySpeed": "自動再生速度",
 
 		"Back": "巻き戻し",
 		"BackButton": "巻き戻し",
@@ -179,6 +220,7 @@ var strings = {
 		"FullScreen": "全画面表示",
 
 		"Help": "ヘルプ",
+		"Hide": "",
 		"HideButton": "テキストを隠します。",
 
 		"iOSAudioWarning": "iOSではオーディオ設定がサポートされていません。",
@@ -210,11 +252,78 @@ var strings = {
 		"SaveInSlot": "スロットにセーブする",
 		"Settings": "環境設定",
 		"SettingsButton": "設定画面を開きます。",
+		"Show": "",
+		"SlotDeletion": "",
+		"SlotOverwrite": "",
 		"Sound": "効果音の音量",
 		"Start": "スタート",
+		"Stop": "",
+
+		"TextSpeed": "テキストスピード",
 
 		"Voice": "ボイスの音量",
 
 		"Windowed": "窓"
+	},
+	"Nederlands": {
+		"AdvanceHelp": "Gebruik de spatiebalk of linker muisknop om te spelen.",
+		"Audio": "Audio",
+		"AutoPlay": "",
+		"AutoPlaySpeed": "Autoplay snelheid",
+
+		"Back": "Terug",
+		"BackButton": "Terug",
+
+		"Cancel": "Stop",
+		"Close": "Sluit",
+		"Confirm": "Ben je zeker dat je wilt stoppen?",
+
+		"FullScreen": "Volledig scherm",
+
+		"Help": "Help",
+		"Hide": "Verberg",
+		"HideButton": "Verberg tekst.",
+
+		"iOSAudioWarning": "Audio instellingen worden niet ondersteund door iOS.",
+
+		"Language": "Taal",
+		"Load": "Laad",
+		"LoadAutoSaveSlots": "Automatisch opgeslagen spellen",
+		"LoadButton": "Open het laadscherm.",
+		"Loading": "Laden",
+		"LoadingMessage": "Wacht tot de onderdelen zijn geladen.",
+		"LoadSlots": "Opgeslagen spellen",
+		"LocalStorageWarning": "Locale Opslag is niet mogelijk in deze Browser.",
+
+		"Music": "Muziek Volume",
+
+		"NoSavedGames": "Geen opgeslagen spellen.",
+		"NoAutoSavedGames": "Geen automatsch opgeslagen spellen.",
+
+		"Overwrite": "Overschrijven",
+
+		"QuickButtons": "Snelmenu knoppen",
+		"Quit": "sluit",
+		"QuitButton": "Sluit spel.",
+
+		"Resolution": "Resolutie",
+
+		"Save": "Opslaan",
+		"SaveButon": "Open de Save Screen.",
+		"SaveInSlot": "Sla op in slot",
+		"Settings": "Instellingen",
+		"SettingsButton": "Open de instellingen",
+		"Show": "",
+		"SlotDeletion": "",
+		"SlotOverwrite": "",
+		"Sound": "Geluids volume",
+		"Start": "Start",
+		"Stop": "",
+
+		"TextSpeed": "Tekst snelheid",
+
+		"Voice": "Stem Volume",
+
+		"Windowed": "Window modus"
 	}
-}
+};

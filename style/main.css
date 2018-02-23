@@ -1,70 +1,184 @@
 /**
+ * =============================================================================
+ * This is the file where all your styling should go in.
+ * Instead of modifying the styles found in the monogatari.css file or others,
+ * you should overwrite those styles in this file.
+ *
+ * The CSS selectors shown are not an extensive list but they are the most
+ * common you might want to change. To find what other elements are available,
+ * you can take a look at the monogatari.css file or use your browser's dev
+ * tools to inspect the elements.
+ * =============================================================================
+**/
+
+/**
  * ===========================
- * Your Style Goes Here
+ * General Styling
  * ===========================
 **/
+
 @import url(//fonts.googleapis.com/css?family=Lato);
 
-body{
-	background: #F7F6F6;
-	font-family: 'Lato', sans-serif;
+body {
+	background: #f7f6f6;
+	font-family: 'Lato', 'Open Sans', sans-serif;
 }
 
-h1, h2{
+h1,
+h2 {
 	border-bottom: 1px solid #979797;
 	color: #979797;
 }
 
-[data-ui='quick-menu'] span{
-	color: #F7F6F6;
+/* Simple Button styles*/
+button {
+	outline: none;
+	background: #00acc1;
+	color: #fff;
 }
 
-[data-ui="inner-menu"]{
+/* Simple Button Style on Hover */
+button:hover {
+	background: #00bcd4;
+}
+
+/* General Styling for Menu Screens */
+[data-menu] {
+
+}
+
+/**
+ * ===========================
+ * Main Menu Styling
+ * ===========================
+**/
+
+/* Main Menu Styling */
+[data-menu="main"] {
+
+}
+
+/* Main Menu Buttons Styling */
+[data-menu="main"] button {
+
+}
+
+/**
+ * ===========================
+ * Save and Load Menus Styling
+ * ===========================
+**/
+
+/* Slots Style */
+[data-ui="slots"] figure {
+	background: rgba(229, 57, 53, 0.8);
+	color: rgba(255, 255, 255, 0.8);
+}
+
+/* Slot's Image Style */
+[data-ui="slots"] img {
+
+}
+
+/* Slots Title Style */
+[data-ui="slots"] figcaption {
+
+}
+
+[data-ui="slots"] figure,
+button {
+	-webkit-transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),-webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.16),0px 2px 5px 0px rgba(0, 0, 0, 0.23);
+}
+
+/**
+ * ===========================
+ * Game Elements Styling
+ * ===========================
+**/
+
+/* Choice Buttons style */
+[data-ui="choices"] button {
+
+}
+
+/* Choice Button Style on Hover */
+[data-ui="choices"] button:hover {
+
+}
+
+/* Text Box styling */
+[data-ui="text"] {
+
+}
+
+/* Character Name Style */
+[data-ui="who"] {
+
+}
+
+/* Style for Centered Text */
+[data-ui="centered"] {
+
+}
+
+/* Character Images Styles */
+#game [data-character] {
+
+}
+
+/* Other Images Styles */
+#game [data-image] {
+
+}
+
+/**
+ * ===========================
+ * Quick Menu Styling
+ * ===========================
+**/
+
+/* Quick Meny Style */
+[data-ui="quick-menu"] {
+
+}
+
+[data-ui="quick-menu"] span {
+	color: #f7f6f6;
+}
+
+[data-ui="quick-menu"].dark span:hover {
+	color: #f7f6f6;
+}
+
+[data-ui="inner-menu"] {
 	border-top: 1px solid #979797;
 	margin-bottom: 2vh;
 }
 
-button{
-	outline: none;
-	background: #00acc1;
-	color: white;
-}
+/**
+ * ===========================
+ * Settings Menu Styling
+ * ===========================
+**/
 
-button:hover{
-	background: #00bcd4;
-}
-
-[data-ui="slots"] figure{
-	background: rgba(229,57,53,0.8);
-	color: rgba(255,255,255,0.8);
-}
-
-input[type=range]::-webkit-slider-runnable-track{
+input[type=range]::-webkit-slider-runnable-track {
 	background: #ffd54f;
 }
 
-input[type=range]:focus::-webkit-slider-runnable-track{
+input[type=range]:focus::-webkit-slider-runnable-track {
 	background: #ffd54f;
 }
 
-input[type=range]::-moz-range-track{
+input[type=range]::-moz-range-track {
 	background: #ffd54f;
 }
 
-input[type=range]::-ms-fill-lower{
+input[type=range]::-ms-fill-lower {
 	background: #ffd54f;
 }
 
 input[type=range]::-ms-fill-upper {
 	background: #ffd54f;
-}
-
-[data-ui="slots"] figure, button{
-	-webkit-transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),-webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.16),0px 2px 5px 0px rgba(0,0,0,0.23);
-}
-
-[data-component="modal"]{
-	border-radius: 3px;
 }

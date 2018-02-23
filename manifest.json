@@ -3,7 +3,7 @@
 	"name": "Monogatari Visual Novel",
 	"background_color": "#F7F7F7",
 	"theme_color": "#F7F7F7",
-	"orientation": "any",
+	"orientation": "landscape",
 	"display": "fullscreen",
 	"start_url": "index.html",
 	"icons": [

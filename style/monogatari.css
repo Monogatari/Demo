@@ -16,7 +16,6 @@
  * ==============================================
 **/
 
-
 /**
  * ===========================
  * HTML Elements Initial Style
@@ -25,40 +24,33 @@
 
 html {
 	width: auto;
-	overflow-x: hidden;
 	height: 100vh;
 	width: 100vw;
 }
 
 h1,
 h2 {
-	margin: 0;
 	padding: 0.03em;
-	font-size: 7vmax;
+	font-size: 3rem;
 }
 
 h3 {
-	margin: 0;
 	padding: 0.03em;
 }
 
 body {
-	font-family: sans-serif;
 	height: 100vh;
 	width: 100vw;
 	max-height: 100vh;
 	max-width: 100vw;
-	overflow-x: hidden;
-	font-size: 2vmax;
+	font-size: 1rem;
 	text-align: center;
-	margin: 0;
-	padding: 0;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
 	color: rgba(0, 0, 0, 0.5);
-	background-color: #F7F7F7;
+	background-color: #f7f7f7;
 }
 
 body.light {
@@ -70,34 +62,26 @@ li {
 	display: inline-block;
 }
 
-a {
-	text-decoration: none;
-	color: inherit;
-}
-
-select {
-	-webkit-appearance: none;
-	border: none;
-	outline: none;
-	font-size: inherit;
-}
-
 button {
-	width: 15vmax;
-	height: 5vmax;
+	width: 8rem;
+	height: 2.5rem;
 	background: rgba(0, 0, 0, 0.5);
-	-webkit-appearance: none;
-	border: none;
-	outline: none;
-	color: #F7F7F7;
-	font-size: inherit;
-	cursor: pointer;
+	color: #f7f7f7;
+	padding: 0;
 }
 
-section div {
+button:hover {
+	background: rgba(0, 0, 0, 0.5);
+}
+
+section > div:not(.row) {
 	width: 100vw;
 }
 
+input,
+select {
+	color: inherit;
+}
 
 /**
  * ===========================
@@ -118,14 +102,9 @@ section div {
 	cursor: wait;
 }
 
-.padded {
-	padding: 2vmax;
-}
-
 .block {
 	display: block;
 }
-
 
 /**
  * ===========================
@@ -134,24 +113,17 @@ section div {
 **/
 
 #game {
-	height: 100vh;
-	max-height: 100vh;
-	max-width: 100vw;
+	height: 100%;
+	max-height: 100%;
+	max-width: 100%;
 	overflow: hidden;
-	width: 100vw;
+	width: 100%;
 	display: none;
+	position: relative;
 }
 
 #game img {
 	position: absolute;
-	-moz-user-select: none;
-	-webkit-user-drag: none;
-	-ms-user-select: none;
-	pointer-events: none;
-	-khtml-user-select: none;
-	-o-user-select: none;
-	-webkit-user-select: none;
-	user-select: none;
 	max-height: 90%;
 }
 
@@ -167,9 +139,8 @@ section div {
 	bottom: 0;
 	position: absolute;
 	max-width: 100%;
-	max-height: 100%;
+	max-height: 80vh;
 }
-
 
 /**
  * ===========================
@@ -177,41 +148,16 @@ section div {
  * ===========================
 **/
 
-[data-notice].modal {
-	display: none;
-	text-align: center;
-	z-index: 20;
-	background: rgba(0, 0, 0, 0.5);
-	width: 100vw;
-	height: 100vh;
-	position: absolute;
-}
-
-[data-notice].modal.active {
-	display: block;
-}
-
-[data-notice] button {
-	display: inline-block;
-	margin: 0 auto;
-	cursor: pointer;
-}
-
-[data-notice].modal  > div {
-	top: 50%;
-    left: 50%;
-	-webkit-transform: translate(-50%,-50%);
-	-moz-transform: translate(-50%,-50%);
-	-o-transform: translate(-50%,-50%);
-	-ms-transform: translate(-50%,-50%);
-	position: absolute;
-	padding: 2em;
+.modal  > div {
 	border-radius: 4px;
-	background-color: #fff;
 }
 
-[data-notice].modal  > p {
-	font-size: 2.5vmax;
+.modal > * {
+	padding: 1rem;
+}
+
+.modal p {
+	font-size: 1rem;
 }
 
 /**
@@ -225,11 +171,9 @@ section div {
 }
 
 [data-component="modal"] {
-	position: relative;
 	height: auto;
-	max-height: 70vh;
-	width: 80vw;
-	top: 100%;
+	max-height: 70%;
+	width: 100%;
 	margin: 0 auto;
 	background: #fff;
 	z-index: 15;
@@ -237,18 +181,16 @@ section div {
 	-moz-transition: all 0.5s;
 	-ms-transition: all 0.5s;
 	transition: all 0.5s;
-	overflow-y: scroll;
+	overflow-y: auto;
 	padding: 2vmin;
-	font-size: 1.5vmax;
+	font-size: 1.25rem;
 	color: rgba(66, 66, 66, 0.9);
 }
 
 [data-component="video"] {
-	position: relative;
 	height: auto;
-	top: 100%;
 	margin: 0 auto;
-	z-index: 2;
+	z-index: 15;
 }
 
 [data-component="modal"] img,
@@ -261,7 +203,6 @@ section div {
 [data-component="video"].active {
 	display: block;
 }
-
 
 /**
  * ===========================
@@ -277,24 +218,24 @@ section div {
 	margin: 1em auto;
 	display: block;
 	border-radius: 3px;
-	box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
 	background: transparent;
 	width: 50vw;
 }
 
 [data-ui="load-progress"]::-webkit-progress-bar {
 	background: transparent;
-	box-shadow: 0 2px 3px rgba(0,0,0,0.2) inset;
+	box-shadow: 0 2px 3px rgba(0, 0, 0, 0.2) inset;
 	border-radius: 3px;
 }
 
 [data-ui="load-progress"]::-webkit-progress-value {
-	background-color: #F16272;
+	background-color: #f16272;
 	border-radius: 3px;
 }
 
 [data-ui="load-progress"]::-moz-progress-bar {
-	background-color: #F16272;
+	background-color: #f16272;
 	border-radius: 3px;
 }
 
@@ -313,14 +254,25 @@ section div {
 	padding: 1vmin;
 }
 
+[data-ui="input"] small {
+	margin: 0.5rem auto;
+}
+
+[data-ui="input-message"] {
+	font-size: 1rem;
+}
+
 [data-ui="input"] input,
 textarea {
 	padding: 1vmin;
 	background: #eee;
-	outline: none;
-	border: none;
 	min-width: 50%;
-	font-size: inherit;
+}
+
+[data-ui="input"] button {
+	width: 3.5rem;
+	height: 2rem;
+	font-size: 1rem;
 }
 
 [data-ui="player"] {
@@ -333,7 +285,7 @@ textarea {
 	display: none;
 	z-index: 11;
 	max-height: 100vh;
-	overflow-y: scroll;
+	overflow-y: auto;
 	height: auto;
 	width: 100vw;
 }
@@ -345,26 +297,25 @@ textarea {
 	width: auto;
 	height: auto;
 	color: rgb(255, 255, 255);
-	cursor: pointer;
 }
 
 [data-ui="face"] {
 	display: inline-block;
 	float: left;
-	max-height: 20vh !important;
+	max-height: 20% !important;
 	position: initial !important;
 }
 
 [data-ui="text"] {
 	background-color: rgba(0, 0, 0, 0.5);
-	min-height: 20vh;
-	max-height: 25vh;
-	overflow-y: scroll;
+	min-height: 20%;
+	max-height: 25%;
+	overflow-y: auto;
 	width: 100%;
 	z-index: 10;
 	text-align: left;
 	position: absolute;
-	bottom: 0vh;
+	bottom: 0;
 	color: rgb(255, 255, 255);
 }
 
@@ -397,25 +348,37 @@ textarea {
 }
 
 [data-ui="quick-menu"] {
-	position: absolute;
 	top: 0;
-	right: 0;
-	width: auto;
-	padding: 1vmin;
-	margin: 0;
-	color: rgba(255, 255, 255, 0.5);
+	background: transparent;
+
 	z-index: 3;
+	position: absolute;
+	height: 2.5rem;
+	max-height: 2.5rem;
 }
 
 [data-ui="quick-menu"].dark {
 	color: rgba(0, 0, 0, 0.5);
 }
 
+[data-ui="quick-menu"].transparent {
+	background: transparent;
+}
+
 [data-ui="quick-menu"] span {
 	display: inline-block;
 	width: auto;
-	font-size: 3.5vmax;
-	margin: 0px 1vmin 0px 1vmin;
+	font-size: 1rem;
+	margin: 0.25rem;
+}
+
+[data-ui="quick-menu"] > span > [data-string] {
+	display: none;
+}
+
+[data-ui="quick-menu"] > span > .fa {
+	display: inline-block;
+	font-size: 1.5rem;
 }
 
 [data-ui="quick-menu"] span:hover {
@@ -428,11 +391,6 @@ textarea {
 	cursor: pointer;
 }
 
-[data-ui="slots"],
-[data-ui="settings"] {
-	margin-bottom: 10vmax;
-}
-
 [data-ui="slots"] figure {
 	width: 20vmax;
 	height: auto;
@@ -440,6 +398,18 @@ textarea {
 	border-radius: 3px;
 	vertical-align: middle;
 	cursor: pointer;
+	position: relative;
+}
+
+[data-ui="slots"] figure [data-delete] {
+	top: -1rem;
+	border-radius: 100%;
+	width: 2rem;
+	height: 2rem;
+	position: absolute;
+	right: -1rem;
+	margin: 0;
+	font-size: 0.5em;
 }
 
 [data-ui="slots"] img {
@@ -459,16 +429,15 @@ textarea {
 }
 
 [data-ui="particles"] {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 	position: absolute;
 }
 
 [data-ui="background"] {
-	width: 100vw;
-	height: 100vh;
+	width: 100%;
+	height: 100%;
 }
-
 
 /**
  * ===========================
@@ -480,7 +449,7 @@ textarea {
 	height: 100vh;
 	max-height: 100vh;
 	max-width: 100vw;
-	overflow-y: scroll;
+	overflow-y: auto;
 	overflow-x: hidden;
 	width: 100vw;
 	display: none;
@@ -490,7 +459,11 @@ textarea {
 [data-menu='settings'] select {
 	margin: 2vmax;
 	background: transparent;
-	color: inherit;
+}
+
+[data-menu='save'] input {
+	background: #fff;
+	border: 1px solid #666;
 }
 
 [data-menu="main"] {
@@ -505,10 +478,18 @@ textarea {
 	margin: 2vmin;
 }
 
-[data-menu] button:hover {
-	cursor: pointer;
+[data-menu] button[data-action="back"] {
+	position: absolute;
+	border-radius: 100%;
+	width: auto;
+	height: auto;
+	padding: 0.5em;
+	margin: 1rem;
 }
 
+[data-menu="load"] h3, [data-menu="save"] h3 {
+	margin: 2rem auto;
+}
 
 /**
  * ====================================
@@ -516,82 +497,38 @@ textarea {
  * ====================================
 **/
 
-input[type=range]::-webkit-slider-runnable-track {
-	cursor: pointer;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range]:focus::-webkit-slider-runnable-track {
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range]::-moz-range-track {
-	cursor: pointer;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range]::-ms-fill-lower {
-	cursor: pointer;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range]:focus::-ms-fill-lower {
-	cursor: pointer;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range]::-ms-fill-upper {
-	cursor: pointer;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range]:focus::-ms-fill-upper {
-	cursor: pointer;
-	background: rgba(0, 0, 0, 0.5);
-}
-
-input[type=range].light::-webkit-slider-runnable-track {
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.5);
-}
-
 input[type=range].light:focus::-webkit-slider-runnable-track {
 	background: rgba(255, 255, 255, 0.5);
 }
 
-input[type=range].light::-moz-range-track {
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.5);
-}
-
-input[type=range].light::-ms-fill-lower {
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.5);
-}
-
-input[type=range].light:focus::-ms-fill-lower {
-	cursor: pointer;
-	background: rgba(255, 255, 255, 0.5);
-}
-
-input[type=range].light::-ms-fill-upper {
-	cursor: pointer;
+input[type=range].light::-webkit-slider-runnable-track {
 	background: rgba(255, 255, 255, 0.5);
 }
 
 input[type=range].light:focus::-ms-fill-upper {
-	cursor: pointer;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light:focus::-ms-fill-lower {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light::-moz-range-track {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light::-ms-fill-lower {
+	background: rgba(255, 255, 255, 0.5);
+}
+
+input[type=range].light::-ms-fill-upper {
 	background: rgba(255, 255, 255, 0.5);
 }
 
 input[type=range] {
-	-webkit-appearance: none;
-	width: 30%;
-	background: transparent;
-	outline: none;
+	width: 60%;
 	height: 2vmin;
 }
-
 
 /**
  * ====================================
@@ -599,128 +536,9 @@ input[type=range] {
  * ====================================
 **/
 
-.vertical * {
-	display: block;
-}
-
-.horizontal * {
-	display: inline-block;
-}
-
-.bottom {
-	position: absolute;
-	bottom: 0;
-	margin: 0;
-}
-
 #game [data-image].bottom {
 	top: auto;
 }
-
-.middle {
-	top: 50%;
-	left: 50%;
-	-webkit-transform: translate(-50%, -50%);
-	-moz-transform: translate(-50%, -50%);
-	-o-transform: translate(-50%, -50%);
-	-ms-transform: translate(-50%, -50%);
-	position: absolute;
-}
-
-.center {
-	margin: 0 auto;
-	left: 0;
-	right: 0;
-}
-
-.left {
-	left: 0;
-}
-
-.right {
-	right: 0;
-}
-
-.align-center {
-	text-align: center;
-}
-
-.align-left {
-	text-align: left;
-}
-
-.align-right {
-	text-align: right;
-}
-
-.vertical.align-center * {
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.vertical.align-left * {
-	margin-right: auto;
-}
-
-.vertical.align-right * {
-	margin-left: auto;
-}
-
-
-/**
- * ================
- * CSS Fixes
- * ===============
-**/
-
-*,
-*:before,
-*:after {
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-	box-sizing: border-box;
-}
-
-::-webkit-scrollbar {
-    background: transparent;
-	width: 5px;
-	height: 5px;
-}
-
-::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-	border-radius: 3px;
-}
-
-.container {
-	margin: 0 auto;
-	max-width: 60rem;
-	/*48rem*/
-	width: 95%;
-}
-
-.clearfix:before,
-.clearfix:after {
-	content: " ";
-	display: table;
-}
-
-.clearfix:after {
-	clear: both;
-}
-
-.clearfix {
-	*zoom: 1;
-}
-
-::selection {
-	background: transparent;
-}
-
-::-moz-selection {
-	background: transparent;
-}
-
 
 /**
  * ====================================
@@ -728,24 +546,130 @@ input[type=range] {
  * ====================================
 **/
 
-@media (max-width: 35rem) {
-	body {
-		font-size: 3vmax !important;
+/** Default Style. Don't change. (320px) **/
+@media screen and  (max-width: 20em) {}
+
+/** Extra Small Devices, Phones (480px) **/
+@media screen and (min-width : 30em) {}
+
+/** Medium Screens, Tablets (601px) **/
+@media screen and (min-width: 37.56255em) {
+
+	[data-ui="input"] button {
+		width: 5rem;
+		height: 3rem;
 	}
+
+	[data-ui="input-message"],
+	.modal p {
+		font-size: 1.5rem;
+	}
+
+	[data-ui="text"] {
+		bottom: 2.5rem;
+	}
+
 	[data-component="modal"] {
-		font-size: 3vmax !important;
+		width: 80%;
 	}
-	button {
-		width: auto;
-		font-size: 4vmax !important;
-		height: auto;
-		padding: 1vmax;
+
+	.modal > * {
+		width: 70%;
 	}
+
+	[data-ui="text"] {
+		bottom: 2.5rem;
+	}
+
 	[data-ui="quick-menu"] span {
-		font-size: 5vmax;
+		font-size: 1.25rem;
+	}
+
+	[data-ui="quick-menu"] span {
+		font-size: 1.25rem;
+		margin: 0.25em;
+	}
+
+	[data-ui="quick-menu"] {
+		bottom: 0;
+		top: auto;
+		background-color: rgba(0, 0, 0, 0.5);
+		color: rgba(255, 255, 255, 0.5);
+	}
+
+	[data-ui="quick-menu"] > span > [data-string] {
+		display: inline-block;
+	}
+
+	[data-ui="quick-menu"] > span > .fa {
+		display: none;
 	}
 
 	[data-ui="load-progress"] {
-		width: 80vw;
+		width: 80%;
 	}
 }
+
+/** Medium Devices, Desktops (768px)**/
+@media screen and (min-width: 48em) {
+	body {
+		font-size: 1.5rem;
+	}
+
+	button {
+		width: auto;
+		height: 3.5rem;
+		padding: 1rem;
+	}
+
+	.modal > * {
+		width: 60%;
+	}
+
+	[data-component="modal"] {
+		width: 70%;
+	}
+}
+
+/** Medium Devices, Desktops (992px)**/
+@media screen and (min-width: 62em) {
+	h1,
+	h2 {
+		font-size: 5rem;
+	}
+
+	.modal > * {
+		width: 50%;
+	}
+
+	[data-component="modal"] {
+		width: 60%;
+	}
+}
+
+/** HD Screen, Large Devices, Wide Screens (1200px) **/
+@media screen and (min-width: 75em) {
+	.modal > * {
+		width: 40%;
+	}
+
+	[data-component="modal"] {
+		width: 50%;
+	}
+}
+
+/** Full HD Screen, Large Devices, Wide Screens (1920px) **/
+@media screen and (min-width: 120em) {
+	.modal > * {
+		width: 30%;
+	}
+}
+
+/** Retina Screen , Large Devices, Wide Screens(2560px) **/
+@media screen and (min-width: 160em) {}
+
+/** 4k Screens, Large Devices, Wide Screens (3840px) **/
+@media screen and (min-width: 240em) {}
+
+/** 5k Screens, Large Devices, Wide Screens (5120px) **/
+@media screen and (min-width: 320em) {}

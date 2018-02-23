@@ -1,24 +1,29 @@
-// Engine Settings.
+/**
+ * =======================================
+ * Engine Settings
+ *
+ * Do not modify the ones marked with a *
+ * Unless you know what you are doing
+ * =======================================
+ **/
 
-// Do not modify the ones marked with a *
+"use strict";
+/* exported engine */
+/* exported storage */
+/* exported settings */
 
-// Unless you know what you are doing
-
-var engine = {
+let engine = {
 
 	// Initial Label *
 	"Label": "Start",
 
-	// Number of Save Slots
+	// Number of AutoSave Slots
 	"Slots": 10,
 
 	// Current Media *
 	"Song": "",
 	"Sound": "",
 	"Scene": "",
-
-	// Javascript saved from the $ command *.
-	"JS": "",
 
 	// Current Statement *.
 	"Step": 0,
@@ -54,11 +59,19 @@ var engine = {
 
 	// The Aspect Ratio your background images are on. This has no effect on
 	// web deployed novels.
-	"AspectRatio": "16:9"
-}
+	"AspectRatio": "16:9",
+
+	// Enables or disables the typing text animation for the whole game.
+	"TypeAnimation": true,
+
+	// Enables or disables the typing animation for the narrator.
+	// If the previous property was set to false, the narrator won't shown
+	// the animation even if this is set to true.
+	"NarratorTypeAnimation": true
+};
 
 // Initial Settings
-var settings = {
+let settings = {
 
 	// Initial Language for Multilanguage Games or for the Default GUI Language.
 	"Language": "English",
@@ -72,12 +85,13 @@ var settings = {
 
 	// Initial resolution used for Electron, it must match the settings inside
 	// the electron.js file. This has no effect on web deployed novels.
-	"Resolution": "800x600"
-}
+	"Resolution": "800x600",
 
-// Persistent Storage Variable
-var storage = {
-	player: {
-		Name: ""
-	}
-}
+	// Speed at which dialog text will appear
+	"TextSpeed": 20,
+
+	// Speed at which the Auto Play feature will show the next statement
+	// It is measured in seconds and starts counting after the text is
+	// completely displayed.
+	"AutoPlaySpeed": 5
+};
