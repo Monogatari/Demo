@@ -24,6 +24,7 @@ let engine = {
 	"Song": "",
 	"Sound": "",
 	"Scene": "",
+	"Particles": "",
 
 	// Current Statement *.
 	"Step": 0,
@@ -34,6 +35,8 @@ let engine = {
 	"ImageHistory": [],
 	"CharacterHistory": [],
 	"SceneHistory": [],
+	"SceneElementsHistory": [],
+	"ParticlesHistory": [],
 
 	// Change to true for a MultiLanguage Game.
 	"MultiLanguage": true,
@@ -52,7 +55,7 @@ let engine = {
 	"Preload": true,
 
 	// Time interval between autosaves (In Minutes). Default: 0 (Off)
-	"AutoSave": 0,
+	"AutoSave": 0.5,
 
 	// Enable service workers; Default: true *
 	"ServiceWorkers": true,
@@ -67,7 +70,12 @@ let engine = {
 	// Enables or disables the typing animation for the narrator.
 	// If the previous property was set to false, the narrator won't shown
 	// the animation even if this is set to true.
-	"NarratorTypeAnimation": true
+	"NarratorTypeAnimation": true,
+
+	// Enables or disables the typing animation for the special centered
+	// character. If the TypeAnimation property was set to false, the centered
+	// character won't shown the animation even if this is set to true.
+	"CenteredTypeAnimation": true
 };
 
 // Initial Settings

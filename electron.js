@@ -23,7 +23,7 @@ function createWindow () {
 	win = new BrowserWindow({
 
 		// Title that will be shown in the window (Your game's title)
-		title: "",
+		title: "Monogatari 101",
 
 		// Set the minimal window size
 		minWidth: 640,

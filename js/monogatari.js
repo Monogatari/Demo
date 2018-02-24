@@ -117,19 +117,43 @@ $_ready(function () {
 		}
 
 		if (typeof engine.ServiceWorkers !== "boolean") {
+			console.warn("The 'ServiceWorkers' property is missing in the engine object, using default ('true') fallback.");
 			engine.ServiceWorkers = true;
 		}
 
 		if (typeof engine.AspectRatio !== "string") {
+			console.warn("The 'AspectRatio' property is missing in the engine object, using default ('16:9') fallback.");
 			engine.AspectRatio = "16:9";
 		}
 
 		if (typeof engine.TypeAnimation !== "boolean") {
+			console.warn("The 'TypeAnimation' property is missing in the engine object, using default ('true') fallback.");
 			engine.TypeAnimation = true;
 		}
 
 		if (typeof engine.NarratorTypeAnimation !== "boolean") {
+			console.warn("The 'NarratorTypeAnimation' property is missing in the engine object, using default ('true') fallback.");
 			engine.NarratorTypeAnimation = true;
+		}
+
+		if (typeof engine.CenteredTypeAnimation !== "boolean") {
+			console.warn("The 'CenteredTypeAnimation' property is missing in the engine object, using default ('true') fallback.");
+			engine.CenteredTypeAnimation = true;
+		}
+
+		if (typeof engine.Particles !== "string") {
+			console.warn("The 'Particles' property is missing in the engine object, using default ('') fallback.");
+			engine.Particles = "";
+		}
+
+		if (typeof engine.ParticlesHistory !== "object") {
+			console.warn("The 'ParticlesHistory' property is missing in the engine object, using default ('[]') fallback.");
+			engine.ParticlesHistory = [];
+		}
+
+		if (typeof engine.SceneElementsHistory !== "object") {
+			console.warn("The 'SceneElementsHistory' property is missing in the engine object, using default ('[]') fallback.");
+			engine.SceneElementsHistory = [];
 		}
 	}
 
@@ -421,7 +445,7 @@ $_ready(function () {
 		const name = data.Name ? data.Name : data.Date;
 		if (typeof scenes[data.Engine.Scene] !== "undefined") {
 
-			$_("[data-menu='load'] [data-ui='saveSlots'] [data-ui='slots']").append(`<figure data-load-slot='${i}' class='col xs6 m4 l3 xl3 animated flipInX'><button class='fa fa-close' data-delete='${i}'></button><img src='img/scenes/${scenes[data.Engine.Scene]} alt=''><figcaption>` + getLocalizedString("Load") + ` #${i} <small>${name}</small></figcaption></figure>`);
+			$_("[data-menu='load'] [data-ui='saveSlots'] [data-ui='slots']").append(`<figure data-load-slot='${i}' class='col xs6 m4 l3 xl3 animated flipInX'><button class='fa fa-close' data-delete='${i}'></button><img src='img/scenes/${scenes[data.Engine.Scene]}' alt=''><figcaption>` + getLocalizedString("Load") + ` #${i} <small>${name}</small></figcaption></figure>`);
 
 			$_("[data-menu='save'] [data-ui='slots']").append(`<figure data-save='${i}' class='col xs6 m4 l3 xl3'><button class='fa fa-close' data-delete='${i}'></button><img src='img/scenes/${scenes[data.Engine.Scene]}' alt=''><figcaption>${getLocalizedString("Overwrite")} #${i}<small>${name}</small></figcaption></figure>`);
 
@@ -439,6 +463,43 @@ $_ready(function () {
 			$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").append(`<figure data-load-slot='${i}' class='col xs6 m4 l3 xl3 animated flipInX'><button class='fa fa-close' data-delete=${i}></button><img src='img/scenes/${scenes[data.Engine.Scene]}' alt=''><figcaption>` + getLocalizedString("Load") + ` #${i} <small>${name}</small></figcaption></figure>`);
 		} else {
 			$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").append(`<figure data-load-slot='${i}' class='col xs6 m4 l3 xl3 animated flipInX'><button class='fa fa-close' data-delete=${i}></button><figcaption>` + getLocalizedString("Load") + ` #${i} <small>${name}</small></figcaption></figure>`);
+		}
+	}
+
+	function updateAutoSlots () {
+		if (!window.localStorage) {
+			return false;
+		}
+
+		$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html("");
+		const savedData = Object.keys(localStorage).sort (function (a, b) {
+			let label;
+			if (a.indexOf (engine.AutoSaveLabel) === 0 && b.indexOf (engine.AutoSaveLabel) === 0) {
+				label = engine.AutoSaveLabel;
+			} else {
+				return 0;
+			}
+
+			const aNumber = parseInt (a.split (label)[1]);
+			const bNumber = parseInt (b.split (label)[1]);
+
+			return aNumber - bNumber;
+		});
+
+		for (let i = 0; i < savedData.length; i++) {
+			const label = savedData[i];
+			if (label.indexOf (engine.AutoSaveLabel) === 0) {
+				const slot = Storage.get (savedData[i]);
+				const id = label.split (engine.AutoSaveLabel)[1];
+				if (slot !== null && slot !== "") {
+					addAutoSlot (id, JSON.parse(slot));
+				}
+			}
+		}
+
+		// Check if there are no Auto Saved games.
+		if ($_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html().trim() == "") {
+			$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html(`<p>${getLocalizedString("NoAutoSavedGames")}</p>`);
 		}
 	}
 
@@ -480,7 +541,7 @@ $_ready(function () {
 				}
 			} else if (label.indexOf (engine.AutoSaveLabel) === 0) {
 				const slot = Storage.get (savedData[i]);
-				const id = label.split (engine.SaveLabel)[1];
+				const id = label.split (engine.AutoSaveLabel)[1];
 				if (slot !== null && slot !== "") {
 					addAutoSlot (id, JSON.parse(slot));
 				}
@@ -507,7 +568,7 @@ $_ready(function () {
 	 **/
 
 	function niceDate () {
-		return new Date ().toLocaleDateString ()
+		return new Date ().toLocaleDateString ();
 	}
 
 	function niceDateTime () {
@@ -637,12 +698,15 @@ $_ready(function () {
 			"Song": data.Engine.Song,
 			"Sound": data.Engine.Sound,
 			"Scene": data.Engine.Scene,
+			"Particles": data.Engine.Particles,
 			"Step": data.Engine.Step,
 			"MusicHistory": data.Engine.MusicHistory,
 			"SoundHistory": data.Engine.SoundHistory,
 			"ImageHistory": data.Engine.ImageHistory,
 			"CharacterHistory": data.Engine.CharacterHistory,
 			"SceneHistory": data.Engine.SceneHistory,
+			"SceneElementsHistory": data.Engine.SceneElementsHistory,
+			"ParticlesHistory": data.Engine.ParticlesHistory
 		});
 		fixEngine ();
 		storage = Object.assign({}, JSON.parse(storageStructure), data.Storage);
@@ -674,6 +738,12 @@ $_ready(function () {
 		if (engine.Sound != "") {
 			analyseStatement(engine.Sound);
 			engine.Step -= 1;
+		}
+
+		if (engine.Particles != "" && typeof engine.Particles == "string") {
+			if (typeof particles[engine.Particles] !== "undefined") {
+				particlesJS (particles[engine.Particles]);
+			}
 		}
 
 		if (engine.Step > 0) {
@@ -750,6 +820,7 @@ $_ready(function () {
 			} else {
 				currentAutoSaveSlot += 1;
 			}
+			updateAutoSlots ();
 
 		}, engine.AutoSave * 60000);
 	} else {
@@ -861,8 +932,6 @@ $_ready(function () {
 			$_("[data-menu='main']").show();
 		}
 	}
-
-	showMainMenu ();
 
 	/**
 	 * ==========================
@@ -1180,10 +1249,22 @@ $_ready(function () {
 				case 32:
 				case 39:
 					if (canProceed()) {
-						hideCentered();
-						shutUp();
-						analyseStatement(label[engine.Step]);
-						engine.Step += 1;
+						if (!finishedTyping && typeof textObject !== "undefined") {
+							const str = textObject.strings [0];
+							const element = $_(textObject.el).data ("ui");
+							textObject.destroy ();
+							if (element == "centered") {
+								$_("[data-ui='centered']").html (str);
+							} else {
+								$_("[data-ui='say']").html (str);
+							}
+							finishedTyping = true;
+						} else {
+							hideCentered();
+							shutUp();
+							analyseStatement(label[engine.Step]);
+							engine.Step += 1;
+						}
 					}
 					break;
 
@@ -1219,7 +1300,7 @@ $_ready(function () {
 		hideCentered();
 		shutUp();
 		if ($_(this).data("do") != "null" && $_(this).data("do") != "") {
-			const back = ["show", "play", "display", "hide", "scene", "stop", "pause"];
+			const back = ["show", "play", "display", "hide", "stop", "particles", "wait", "scene", "clear", "vibrate", "notify", "next"];
 			try {
 				$_("[data-ui='choices']").hide();
 				$_("[data-ui='choices']").html("");
@@ -1251,8 +1332,13 @@ $_ready(function () {
 		if (canProceed()) {
 			if (!finishedTyping && typeof textObject !== "undefined") {
 				const str = textObject.strings [0];
+				const element = $_(textObject.el).data ("ui");
 				textObject.destroy ();
-				$_("[data-ui='say']").html (str);
+				if (element == "centered") {
+					$_("[data-ui='centered']").html (str);
+				} else {
+					$_("[data-ui='say']").html (str);
+				}
 				finishedTyping = true;
 			} else {
 				hideCentered();
@@ -1428,9 +1514,7 @@ $_ready(function () {
 
 		$_("[data-ui='input'] [data-ui='warning']").text("");
 
-		$_("#game").style({
-			"background": "initial"
-		});
+		$_("[data-ui='background']").style("background", "initial");
 		whipeText();
 	}
 
@@ -1509,145 +1593,186 @@ $_ready(function () {
 		shutUp();
 		if (engine.Step >= 2) {
 			engine.Step -= 2;
-			const back = ["show", "play", "display", "hide", "stop"];
+			const back = ["show", "play", "display", "hide", "stop", "particles", "wait", "scene", "clear", "vibrate", "notify", "next"];
 			let flag = true;
 			try {
-				if (typeof label[engine.Step] == "string") {
-					while (back.indexOf(label[engine.Step].split(" ")[0]) > -1 && engine.Step > 0 && flag) {
-						const parts = replaceVariables(label[engine.Step]).split(" ");
-						switch (parts[0]) {
-							case "show":
-								if (typeof characters[parts[1]] != "undefined") {
-									$_("[data-character='" + parts[1] + "']").remove();
-									if (engine.CharacterHistory.length > 1) {
-										engine.CharacterHistory.pop();
-									}
-
-									const last_character = engine.CharacterHistory.slice(-1)[0];
-									if (typeof last_character != "undefined") {
-										if (last_character.indexOf("data-character='" + parts[1] + "'") > -1) {
-											$_("#game").append(last_character);
+				while (engine.Step > 0 && flag) {
+					if (typeof label[engine.Step] == "string") {
+						if (back.indexOf(label[engine.Step].split(" ")[0]) > -1) {
+							const parts = replaceVariables(label[engine.Step]).split(" ");
+							switch (parts[0]) {
+								case "show":
+									if (typeof characters[parts[1]] != "undefined") {
+										$_("[data-character='" + parts[1] + "']").remove();
+										if (engine.CharacterHistory.length > 1) {
+											engine.CharacterHistory.pop();
 										}
-									}
-								} else {
-									if (typeof parts[3] != "undefined" && parts[3] != "") {
-										$_("[data-image='" + parts[1] + "']").addClass(parts[3]);
+
+										const last_character = engine.CharacterHistory.slice(-1)[0];
+										if (typeof last_character != "undefined") {
+											if (last_character.indexOf("data-character='" + parts[1] + "'") > -1) {
+												$_("#game").append(last_character);
+											}
+										}
 									} else {
-										$_("[data-image='" + parts[1] + "']").remove();
+										if (typeof parts[3] != "undefined" && parts[3] != "") {
+											$_("[data-image='" + parts[1] + "']").addClass(parts[3]);
+										} else {
+											$_("[data-image='" + parts[1] + "']").remove();
+										}
+										engine.ImageHistory.pop();
 									}
-									engine.ImageHistory.pop();
-								}
-								break;
+									break;
 
-							case "play":
-								if (parts[1] == "music") {
-									musicPlayer.removeAttribute("loop");
-									musicPlayer.setAttribute("src", "");
-									engine.Song = "";
-									musicPlayer.pause();
-									musicPlayer.currentTime = 0;
-								} else if (parts[1] == "sound") {
-									soundPlayer.removeAttribute("loop");
-									soundPlayer.setAttribute("src", "");
-									soundPlayer.pause();
-									soundPlayer.currentTime = 0;
-								}
-								break;
-
-							case "stop":
-								if (parts[1] == "music") {
-									const last_song = engine.MusicHistory.pop().split(" ");
-
-									if (last_song[3] == "loop") {
-										musicPlayer.setAttribute("loop", "");
-									} else if (last_song[3] == "noloop") {
+								case "play":
+									if (parts[1] == "music") {
 										musicPlayer.removeAttribute("loop");
+										musicPlayer.setAttribute("src", "");
+										engine.Song = "";
+										musicPlayer.pause();
+										musicPlayer.currentTime = 0;
+									} else if (parts[1] == "sound") {
+										soundPlayer.removeAttribute("loop");
+										soundPlayer.setAttribute("src", "");
+										soundPlayer.pause();
+										soundPlayer.currentTime = 0;
 									}
-									if (typeof music !== "undefined") {
-										if (typeof music[last_song[2]] != "undefined") {
-											musicPlayer.setAttribute("src", "audio/music/" + music[last_song[2]]);
+									break;
+
+								case "stop":
+									if (parts[1] == "music") {
+										const last_song = engine.MusicHistory.pop().split(" ");
+
+										if (last_song[3] == "loop") {
+											musicPlayer.setAttribute("loop", "");
+										} else if (last_song[3] == "noloop") {
+											musicPlayer.removeAttribute("loop");
+										}
+										if (typeof music !== "undefined") {
+											if (typeof music[last_song[2]] != "undefined") {
+												musicPlayer.setAttribute("src", "audio/music/" + music[last_song[2]]);
+											} else {
+												musicPlayer.setAttribute("src", "audio/music/" + last_song[2]);
+											}
 										} else {
 											musicPlayer.setAttribute("src", "audio/music/" + last_song[2]);
 										}
-									} else {
-										musicPlayer.setAttribute("src", "audio/music/" + last_song[2]);
-									}
-									musicPlayer.play();
-									engine.Song = last_song.join(" ");
-								} else if (parts[1] == "sound") {
-									const last = engine.SoundHistory.pop().split(" ");
+										musicPlayer.play();
+										engine.Song = last_song.join(" ");
+									} else if (parts[1] == "sound") {
+										const last = engine.SoundHistory.pop().split(" ");
 
-									if (last[3] == "loop") {
-										soundPlayer.setAttribute("loop", "");
-									} else if (last[3] == "noloop") {
-										soundPlayer.removeAttribute("loop");
-									}
+										if (last[3] == "loop") {
+											soundPlayer.setAttribute("loop", "");
+										} else if (last[3] == "noloop") {
+											soundPlayer.removeAttribute("loop");
+										}
 
-									if (typeof sound !== "undefined") {
-										if (typeof sound[last[2]] != "undefined") {
-											soundPlayer.setAttribute("src", "audio/sound/" + sound[last[2]]);
+										if (typeof sound !== "undefined") {
+											if (typeof sound[last[2]] != "undefined") {
+												soundPlayer.setAttribute("src", "audio/sound/" + sound[last[2]]);
+											} else {
+												soundPlayer.setAttribute("src", "audio/sound/" + last[2]);
+											}
 										} else {
 											soundPlayer.setAttribute("src", "audio/sound/" + last[2]);
 										}
-									} else {
-										soundPlayer.setAttribute("src", "audio/sound/" + last[2]);
+
+										soundPlayer.play();
+										engine.Sound = last.join(" ");
+									} else if (parts[1] == "particles") {
+										if (typeof engine.ParticlesHistory === "object") {
+											if (engine.ParticlesHistory.length > 0) {
+												var last_particles = engine.ParticlesHistory.pop ();
+												if (typeof particles[last_particles] !== "undefined") {
+													particlesJS (particles[last_particles]);
+													engine.Particles = last_particles;
+												}
+											}
+										}
+									}
+									break;
+
+								case "scene":
+									engine.SceneHistory.pop();
+									engine.Scene = engine.SceneHistory.slice(-1)[0];
+
+									if (typeof engine.Scene != "undefined") {
+										$_("[data-character]").remove();
+										$_("[data-image]").remove();
+										$_("[data-ui='background']").removeClass ();
+
+										if (typeof scenes[engine.Scene] !== "undefined") {
+											$_("[data-ui='background']").style("background", "url(img/scenes/" + scenes[engine.Scene] + ") center / cover no-repeat");
+										} else {
+											$_("[data-ui='background']").style("background", engine.Scene);
+										}
+
+										if (typeof  engine.SceneElementsHistory !== "undefined") {
+											if (engine.SceneElementsHistory.length > 0) {
+												var scene_elements = engine.SceneElementsHistory.pop ();
+
+												if (typeof scene_elements === "object") {
+													for (const element of scene_elements) {
+														$_("#game").append (element);
+													}
+												}
+											}
+										} else {
+											engine.SceneElementsHistory = [];
+										}
 									}
 
-									soundPlayer.play();
-									engine.Sound = last.join(" ");
-								}
-								break;
+									whipeText();
+									break;
 
-							case "scene":
-								engine.SceneHistory.pop();
-								engine.Scene = engine.SceneHistory.slice(-1)[0];
-
-								if (typeof engine.Scene != "undefined") {
-									$_("[data-character]").remove();
-									$_("[data-image]").remove();
-
-									if (typeof scenes[parts[1]] != "undefined") {
-										$_("[data-ui='background']").style("background", "url(img/scenes/" + scenes[engine.Scene] + ") center / cover no-repeat");
-									} else {
-										$_("[data-ui='background']").style("background", engine.Scene);
+								case "display":
+									if (parts[1] == "message") {
+										$_("[data-ui='message-content']").html("");
+										$_("[data-ui='messages']").removeClass("active");
+									} else if (parts[1] == "image") {
+										$_("[data-image='" + parts[2] + "']").remove();
 									}
-								}
+									break;
+								case "hide":
+									if (typeof characters[parts[1]] != "undefined" && engine.CharacterHistory.length > 0) {
+										$_("#game").append(engine.CharacterHistory.pop());
 
-								whipeText();
-								break;
+									} else if (typeof images[parts[1]] != "undefined" && engine.ImageHistory > 0) {
+										$_("#game").append(engine.ImageHistory.pop());
 
-							case "display":
-								if (parts[1] == "message") {
-									$_("[data-ui='message-content']").html("");
-									$_("[data-ui='messages']").removeClass("active");
-								} else if (parts[1] == "image") {
-									$_("[data-image='" + parts[2] + "']").remove();
-								}
-								break;
-							case "hide":
-								if (typeof characters[parts[1]] != "undefined" && engine.CharacterHistory.length > 0) {
-									$_("#game").append(engine.CharacterHistory.pop());
+									} else {
+										flag = false;
+										engine.Step += 1;
+									}
+									break;
 
-								} else if (typeof images[parts[1]] != "undefined" && engine.ImageHistory > 0) {
-									$_("#game").append(engine.ImageHistory.pop());
-
-								} else {
+								case "particles":
+									$_("#particles-js").html("");
+									break;
+								default:
 									flag = false;
-									engine.Step += 1;
-								}
-								break;
+									break;
+							}
+							if ((engine.Step - 1) >= 0) {
+								engine.Step -= 1;
+							}
+						} else {
+							flag = false;
+						}
+					} else if (typeof label[engine.Step] == "object") {
+						if (typeof label[engine.Step].Function !== "undefined") {
+							assertAsync(label[engine.Step].Function.Reverse).then(function () {
+								block = false;
+							}).catch(function () {
+								block = false;
+							});
 						}
 						if ((engine.Step - 1) >= 0) {
 							engine.Step -= 1;
 						}
-					}
-
-				} else if (typeof label[engine.Step] == "object") {
-					while (typeof label[engine.Step] == "object") {
-
-						if ((engine.Step - 1) >= 0) {
-							engine.Step -= 1;
-						}
+					} else {
+						flag = false;
 					}
 				}
 				analyseStatement(label[engine.Step]);
@@ -1659,6 +1784,9 @@ $_ready(function () {
 	}
 
 	function whipeText () {
+		if (typeof textObject != "undefined") {
+			textObject.destroy ();
+		}
 		$_("[data-ui='who']").html("");
 		$_("[data-ui='say']").html("");
 	}
@@ -1783,6 +1911,16 @@ $_ready(function () {
 							break;
 
 						case "scene":
+
+							var scene_elements = [];
+							$_("#game img:not([data-ui='face']):not([data-visibility='invisible'])").each(function (element) {
+								scene_elements.push (element.outerHTML);
+							});
+							if (typeof engine.SceneElementsHistory !== "object") {
+								engine.SceneElementsHistory = [];
+							}
+							engine.SceneElementsHistory.push (scene_elements);
+
 							$_("[data-character]").remove();
 							$_("[data-image]").remove();
 							$_("[data-ui='background']").removeClass();
@@ -1798,11 +1936,13 @@ $_ready(function () {
 							// Check if an animation or class was provided
 							// scene [scene] with [animation] [infinite]
 							//   0      1     2       3           4
-
 							if (parts.length > 2) {
 								if (parts[2] == "with" && parts[3].trim != "") {
-									$_("[data-ui='background']").addClass("animated");
-									$_("[data-ui='background']").addClass((parts.join(" ").replace("scene " + parts[1], "").replace(" with ", " ")).trim());
+									$_("[data-ui='background']").addClass ("animated");
+									var class_list = (parts.join(" ").replace ("scene " + parts[1], "").replace (" with ", " ")).trim ().split (" ");
+									for (const newClass of class_list) {
+										$_("[data-ui='background']").addClass (newClass);
+									}
 								}
 							}
 
@@ -1985,11 +2125,22 @@ $_ready(function () {
 
 						case "clear":
 							whipeText();
+							next ();
 							break;
 
 						case "centered":
 							$_("[data-ui='text']").hide();
-							$_("#game").append("<div class='middle align-center' data-ui='centered'>" + statement.replace(parts[0] + " ", "") + "</div>");
+							$_("#game").append("<div class='middle align-center' data-ui='centered'></div>");
+							if (engine.TypeAnimation) {
+								if (engine.CenteredTypeAnimation) {
+									typedConfiguration.strings = [statement.replace(parts[0] + " ", "")];
+									textObject = new Typed ("[data-ui='centered']", typedConfiguration);
+								} else {
+									$_("[data-ui='centered']").html (statement.replace(parts[0] + " ", ""));
+								}
+							} else {
+								$_("[data-ui='centered']").html (statement.replace(parts[0] + " ", ""));
+							}
 							break;
 
 						case "vibrate":
@@ -2045,6 +2196,12 @@ $_ready(function () {
 								if (particles[parts[1]]) {
 									if (typeof particlesJS != "undefined") {
 										particlesJS(particles[parts[1]]);
+										if (typeof engine.ParticlesHistory !== "object") {
+											engine.ParticlesHistory = [];
+										}
+										engine.ParticlesHistory.push (parts[1]);
+										engine.Particles = parts[1];
+										next ();
 									} else {
 										console.error("particlesJS is not loaded, are you sure you added it?");
 									}
@@ -2159,10 +2316,10 @@ $_ready(function () {
 					if (typeof statement.Choice != "undefined") {
 						$_("[data-ui='choices']").html("");
 						for (const i in statement.Choice) {
-							const choice = label[engine.Step].Choice[i];
+							const choice = statement.Choice[i];
 							if (typeof choice.Condition != "undefined" && choice.Condition != "") {
 
-								assertAsync(label[engine.Step].Choice[i].Condition).then(function () {
+								assertAsync(statement.Choice[i].Condition).then(function () {
 									if (typeof choice.Class != "undefined") {
 										$_("[data-ui='choices']").append("<button data-do='" + choice.Do + "' class='" + choice.Class + "'>" + choice.Text + "</button>");
 									} else {
@@ -2189,16 +2346,19 @@ $_ready(function () {
 						const condition = statement.Conditional;
 
 						assertAsync(condition.Condition).then(function () {
-							if (condition.True.trim() == "") {
-								analyseStatement("next");
-								engine.Step += 1;
+							if (typeof condition.True === "string") {
+								if (condition.True.trim() == "") {
+									analyseStatement("next");
+									engine.Step += 1;
+								} else {
+									analyseStatement(condition.True);
+								}
 							} else {
 								analyseStatement(condition.True);
 							}
 							block = false;
 						}).catch(function () {
 							analyseStatement(condition.False);
-							engine.Step += 1;
 							block = false;
 						});
 
@@ -2230,6 +2390,14 @@ $_ready(function () {
 						}
 
 						$_("[data-ui='input'] [data-action='submit']").click(inputButtonListener);
+					} else if (typeof statement.Function !== "undefined") {
+						assertAsync(statement.Function.Apply).then(function () {
+							block = false;
+							analyseStatement(label[engine.Step]);
+							engine.Step += 1;
+						}).catch(function () {
+							block = false;
+						});
 					}
 					break;
 			}

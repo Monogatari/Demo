@@ -3,6 +3,11 @@
 
 let storage = {
 	player: {
-		name: ""
-	}
+		name: "Player"
+	},
+	evelyn_name: "???",
+	animations: false,
+	media: false,
+	playing: false,
+	scripting: false
 };

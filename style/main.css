@@ -113,6 +113,10 @@ button {
 
 }
 
+[data-ui="centered"] {
+	color: #fff;
+}
+
 /* Character Name Style */
 [data-ui="who"] {
 
