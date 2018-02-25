@@ -138,7 +138,6 @@ let script = {
 				"Warning": "You must enter a name!"
 			}},
 			"centered You know?...",
-			"wait 500",
 			"centered At first, there was nothing, only void. A void so dark and silent...",
 			"particles universe",
 			"centered Then, suddenly, they started to appear...",
@@ -467,7 +466,6 @@ let script = {
 				"Warning": "Debes introducir un nombre!"
 			}},
 			"centered Sabes?...",
-			"wait 500",
 			"centered Al principio no había nada, sólo un vacio. Un vacio tan oscuro y silencioso...",
 			"particles universe",
 			"centered De pronto, ellos comenzaron a aparecer...",
