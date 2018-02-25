@@ -85,6 +85,10 @@ button:hover {
 
 }
 
+[data-ui="slots"] button {
+	padding: 0;
+}
+
 [data-ui="slots"] figure,
 button {
 	-webkit-transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),-webkit-transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);

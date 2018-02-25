@@ -133,6 +133,7 @@ let script = {
 				"Save": function (input) {
 					Storage.set ("PlayerName", input);
 					storage.player.name = input;
+					return true;
 				},
 				"Warning": "You must enter a name!"
 			}},
@@ -241,6 +242,7 @@ let script = {
 				"Save": function (input) {
 					Storage.set ("Evelyn_Name", input);
 					storage.evelyn_name = input;
+					return true;
 				},
 				"Warning": "Choose a nice name for me please."
 			}},

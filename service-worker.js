@@ -13,7 +13,7 @@ var files = [
 	"manifest.json",
 
 	// HTML Files
-	// "index.html",
+	"index.html",
 
 	// Style Sheets
 	"style/font-awesome.min.css",
@@ -21,17 +21,21 @@ var files = [
 	"style/animate.min.css",
 	"style/csshake.min.css",
 	"style/monogatari.css",
-	// "style/main.css",
+	"style/main.css",
 
 	// JavaScript Files
+	"js/polyfill.min.js",
 	"js/particles.min.js",
 	"js/jquery.min.js",
 	"js/artemis.min.js",
 	"js/typed.min.js",
+	"js/typed.min.js.map",
 	"js/monogatari.js",
 	"js/strings.js",
-	// "js/options.js",
-	// "js/script.js",
+	"js/options.js",
+	"js/storage.js",
+	"js/script.js",
+	"js/main.js",
 
 	// Fonts
 	"fonts/fontawesome-webfont.eot",
@@ -55,28 +59,27 @@ var files = [
 	"img/icons/icon_180x180.png",
 	"img/icons/icon_192x192.png",
 	"img/icons/icon_310x310.png",
-	"img/icons/icon_512x512.png"
+	"img/icons/icon_512x512.png",
 
 	// Scene Images
-	//"img/scenes/",
+	"img/scenes/classroom.jpg",
+	"img/scenes/home.png",
+	"img/scenes/library.png",
+	"img/scenes/room.jpg",
+	"img/scenes/sea.jpg",
 
 	// Character Images
-	//"img/characters/",
-
-	// Side Images
-	//"img/characters/",
+	"img/characters/Evelyn/ahahahah.png",
+	"img/characters/Evelyn/hehehehe.png",
+	"img/characters/Evelyn/hmph!.png",
+	"img/characters/Evelyn/ngggg....png",
+	"img/characters/Evelyn/normal.png",
+	"img/characters/Evelyn/tongue.png",
+	"img/characters/Evelyn/uhh.png",
+	"img/characters/Evelyn/wink.png",
 
 	// UI Images
-	//"img/ui/",
-
-	// Music Audio
-	// "audio/music/",
-
-	// Voice Audio
-	// "audio/voice/"
-
-	// Sound Audio
-	// "audio/sound/"
+	"img/ui/main-screen.svg"
 ];
 
 self.addEventListener("install", function (event) {
