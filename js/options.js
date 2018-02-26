@@ -55,7 +55,7 @@ let engine = {
 	"Preload": true,
 
 	// Time interval between autosaves (In Minutes). Default: 0 (Off)
-	"AutoSave": 0.5,
+	"AutoSave": 5,
 
 	// Enable service workers; Default: true *
 	"ServiceWorkers": true,

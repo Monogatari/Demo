@@ -41,6 +41,7 @@
 /* global particles */
 /* global require */
 /* global particlesJS */
+/* global pJSDom */
 /* global Typed */
 /* global scenes */
 /* global script */
@@ -465,24 +466,25 @@ $_ready(function () {
 		}
 	}
 
-	function updateAutoSlots () {
+	function setAutoSlots () {
 		if (!window.localStorage) {
 			return false;
 		}
 
 		$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html("");
-		const savedData = Object.keys(localStorage).sort (function (a, b) {
-			let label;
-			if (a.indexOf (engine.AutoSaveLabel) === 0 && b.indexOf (engine.AutoSaveLabel) === 0) {
-				label = engine.AutoSaveLabel;
+		const savedData = Object.keys(localStorage).filter(function (key) {
+			return key.indexOf (engine.AutoSaveLabel) == 0;
+		}).sort (function (a, b) {
+			const aNumber = parseInt (a.split (engine.AutoSaveLabel)[1]);
+			const bNumber = parseInt (b.split (engine.AutoSaveLabel)[1]);
+
+			if (aNumber > bNumber) {
+				return 1;
+			} else if (aNumber < bNumber) {
+				return -1;
 			} else {
 				return 0;
 			}
-
-			const aNumber = parseInt (a.split (label)[1]);
-			const bNumber = parseInt (b.split (label)[1]);
-
-			return aNumber - bNumber;
 		});
 
 		for (let i = 0; i < savedData.length; i++) {
@@ -509,41 +511,30 @@ $_ready(function () {
 		}
 
 		$_("[data-menu='load'] [data-ui='saveSlots'] [data-ui='slots']").html("");
-		$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html("");
 		$_("[data-menu='save'] [data-ui='slots']").html("");
 
 		$_("[data-menu='save'] [data-input='slotName']").value (niceDateTime ());
 
-		const savedData = Object.keys(localStorage).sort (function (a, b) {
-			let label;
-			if (a.indexOf (engine.SaveLabel) === 0 && b.indexOf (engine.SaveLabel) === 0) {
-				label = engine.SaveLabel;
-			} else if (a.indexOf (engine.AutoSaveLabel) === 0 && b.indexOf (engine.AutoSaveLabel) === 0) {
-				label = engine.AutoSaveLabel;
+		const savedData = Object.keys(localStorage).filter(function (key) {
+			return key.indexOf (engine.SaveLabel) == 0;
+		}).sort (function (a, b) {
+			const aNumber = parseInt (a.split (engine.SaveLabel)[1]);
+			const bNumber = parseInt (b.split (engine.SaveLabel)[1]);
+			if (aNumber > bNumber) {
+				return 1;
+			} else if (aNumber < bNumber) {
+				return -1;
 			} else {
 				return 0;
 			}
-
-			const aNumber = parseInt (a.split (label)[1]);
-			const bNumber = parseInt (b.split (label)[1]);
-
-			return aNumber - bNumber;
 		});
 
 		for (let i = 0; i < savedData.length; i++) {
 			const label = savedData[i];
-			if (label.indexOf (engine.SaveLabel) === 0) {
-				const slot = Storage.get(label);
-				const id = label.split (engine.SaveLabel)[1];
-				if (slot !== null && slot !== "") {
-					addSlot (id, JSON.parse (slot));
-				}
-			} else if (label.indexOf (engine.AutoSaveLabel) === 0) {
-				const slot = Storage.get (savedData[i]);
-				const id = label.split (engine.AutoSaveLabel)[1];
-				if (slot !== null && slot !== "") {
-					addAutoSlot (id, JSON.parse(slot));
-				}
+			const slot = Storage.get(label);
+			const id = label.split (engine.SaveLabel)[1];
+			if (slot !== null && slot !== "") {
+				addSlot (id, JSON.parse (slot));
 			}
 		}
 
@@ -551,11 +542,7 @@ $_ready(function () {
 		if ($_("[data-menu='load'] [data-ui='saveSlots'] [data-ui='slots']").html().trim() == "") {
 			$_("[data-menu='load'] [data-ui='slots']").html(`<p>${getLocalizedString("NoSavedGames")}</p>`);
 		}
-
-		// Check if there are no Auto Saved games.
-		if ($_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html().trim() == "") {
-			$_("[data-menu='load'] [data-ui='autoSaveSlots'] [data-ui='slots']").html(`<p>${getLocalizedString("NoAutoSavedGames")}</p>`);
-		}
+		setAutoSlots ();
 	}
 
 	setSlots();
@@ -730,13 +717,50 @@ $_ready(function () {
 		});
 
 		if (engine.Song != "") {
-			analyseStatement(engine.Song);
-			engine.Step -= 1;
+			const parts = engine.Song.split (" ");
+			if (parts[1] == "music") {
+
+				if (parts[3] == "loop") {
+					musicPlayer.setAttribute("loop", "");
+				} else if (parts[3] == "noloop") {
+					musicPlayer.removeAttribute("loop");
+				}
+
+				if (typeof music !== "undefined") {
+					if (typeof music[parts[2]] != "undefined") {
+						musicPlayer.setAttribute("src", "audio/music/" + music[parts[2]]);
+					} else {
+						musicPlayer.setAttribute("src", "audio/music/" + parts[2]);
+					}
+				} else {
+					musicPlayer.setAttribute("src", "audio/music/" + parts[2]);
+				}
+
+				musicPlayer.play();
+			}
 		}
 
 		if (engine.Sound != "") {
-			analyseStatement(engine.Sound);
-			engine.Step -= 1;
+			const parts = engine.Sound.split (" ");
+			if (parts[1] == "sound") {
+				if (parts[3] == "loop") {
+					soundPlayer.setAttribute("loop", "");
+				} else if (parts[3] == "noloop") {
+					soundPlayer.removeAttribute("loop");
+				}
+
+				if (typeof sound !== "undefined") {
+					if (typeof sound[parts[2]] != "undefined") {
+						soundPlayer.setAttribute("src", "audio/sound/" + sound[parts[2]]);
+					} else {
+						soundPlayer.setAttribute("src", "audio/sound/" + parts[2]);
+					}
+				} else {
+					soundPlayer.setAttribute("src", "audio/sound/" + parts[2]);
+				}
+
+				soundPlayer.play();
+			}
 		}
 
 		if (engine.Particles != "" && typeof engine.Particles == "string") {
@@ -814,7 +838,7 @@ $_ready(function () {
 			} else {
 				currentAutoSaveSlot += 1;
 			}
-			updateAutoSlots ();
+			setAutoSlots ();
 
 		}, engine.AutoSave * 60000);
 	} else {
@@ -1558,6 +1582,26 @@ $_ready(function () {
 		analyseStatement(label[engine.Step]);
 	}
 
+	function stopParticles () {
+		try {
+			if (typeof pJSDom === "object") {
+				if (pJSDom.length > 0) {
+					for (let i = 0; i < pJSDom.length; i++) {
+						if (typeof pJSDom[i].pJS !== "undefined") {
+							cancelAnimationFrame(pJSDom[i].pJS.fn.drawAnimFrame);
+							pJSDom.shift ();
+						}
+					}
+				}
+			}
+		} catch (e) {
+			console.error ("An error ocurred while trying to stop particle system.");
+		}
+
+		engine.Particles = "";
+		$_("#particles-js").html("");
+	}
+
 	// Function to execute the previous statement in the script.
 	function previous () {
 
@@ -1606,6 +1650,7 @@ $_ready(function () {
 									} else if (parts[1] == "sound") {
 										soundPlayer.removeAttribute("loop");
 										soundPlayer.setAttribute("src", "");
+										engine.Sound = "";
 										soundPlayer.pause();
 										soundPlayer.currentTime = 0;
 									}
@@ -1720,7 +1765,7 @@ $_ready(function () {
 									break;
 
 								case "particles":
-									$_("#particles-js").html("");
+									stopParticles ();
 									break;
 								default:
 									flag = false;
@@ -2012,7 +2057,7 @@ $_ready(function () {
 								soundPlayer.pause();
 								soundPlayer.currentTime = 0;
 							} else if (parts[1] == "particles") {
-								$_("#particles-js").html("");
+								stopParticles ();
 							}
 							next();
 							break;

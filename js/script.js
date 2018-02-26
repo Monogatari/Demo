@@ -180,18 +180,6 @@ let script = {
 			}},
 			"particles universe",
 			"e Hundreds became thousands...",
-			"stop particles",
-			{"Function": {
-				"Apply": function () {
-					particles.universe.particles.number.value = 100;
-					return true;
-				},
-				"Reverse": function () {
-					particles.universe.particles.number.value = 50;
-					return true;
-				},
-			}},
-			"particles universe",
 			"e Soon they weren't just there... they were interacting, joining forces for a higher goal...",
 			"stop particles",
 			{"Function": {
@@ -208,7 +196,7 @@ let script = {
 			"e They were getting ready...",
 			"stop particles",
 
-			"play music Theme loop",
+			"play music Theme",
 			"scene Classroom",
 			"show e Normal center with fadeIn",
 			"e Ok guys, that's it for today, you can go home.",
