@@ -1,13 +1,13 @@
-"use strict";
-// Persistent Storage Variable
+/* global monogatari */
 
-let storage = {
+// Persistent Storage Variable
+monogatari.storage ({
 	player: {
 		name: "Player"
 	},
-	evelyn_name: "???",
+	yui_name: "???",
 	animations: false,
 	media: false,
 	playing: false,
 	scripting: false
-};
+});

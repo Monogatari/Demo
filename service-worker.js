@@ -1,140 +1,110 @@
-"use strict";
+'use strict';
 
 // The name of your game, no spaces or special characters.
-var name = "Monogatari";
+const name = 'Monogatari';
 
 // The version of the cache, changing this will force everything to be cached
 // again.
-var version = "0.2.0";
+const version = '0.3.0';
 
-var files = [
+const files = [
+
+	'/',
 
 	// General Files
-	"manifest.json",
+	'manifest.json',
+
+	// Engine Files
+	'engine/core/monogatari.css',
+	'engine/core/monogatari.js',
 
 	// HTML Files
-	"index.html",
+	'index.html',
 
 	// Style Sheets
-	"style/font-awesome.min.css",
-	"style/kayros.min.css",
-	"style/animate.min.css",
-	"style/csshake.min.css",
-	"style/monogatari.css",
-	"style/main.css",
+	'style/main.css',
 
 	// JavaScript Files
-	"js/polyfill.min.js",
-	"js/particles.min.js",
-	"js/jquery.min.js",
-	"js/artemis.min.js",
-	"js/typed.min.js",
-	"js/typed.min.js.map",
-	"js/monogatari.js",
-	"js/strings.js",
-	"js/options.js",
-	"js/storage.js",
-	"js/script.js",
-	"js/main.js",
-
-	// Fonts
-	"fonts/fontawesome-webfont.eot",
-	"fonts/fontawesome-webfont.svg",
-	"fonts/fontawesome-webfont.ttf",
-	"fonts/fontawesome-webfont.woff",
-	"fonts/fontawesome-webfont.woff2",
-	"fonts/FontAwesome.otf",
+	'js/options.js',
+	'js/storage.js',
+	'js/script.js',
+	'js/main.js',
 
 	// App Images
-	"img/favicon.ico",
-	"img/icons/icon_48x48.png",
-	"img/icons/icon_60x60.png",
-	"img/icons/icon_70x70.png",
-	"img/icons/icon_76x76.png",
-	"img/icons/icon_96x96.png",
-	"img/icons/icon_128x128.png",
-	"img/icons/icon_150x150.png",
-	"img/icons/icon_152x152.png",
-	"img/icons/icon_167x167.png",
-	"img/icons/icon_180x180.png",
-	"img/icons/icon_192x192.png",
-	"img/icons/icon_310x310.png",
-	"img/icons/icon_512x512.png",
-
-	// Scene Images
-	"img/scenes/classroom.jpg",
-	"img/scenes/home.png",
-	"img/scenes/library.png",
-	"img/scenes/room.jpg",
-	"img/scenes/sea.jpg",
-
-	// Character Images
-	"img/characters/Evelyn/ahahahah.png",
-	"img/characters/Evelyn/hehehehe.png",
-	"img/characters/Evelyn/hmph!.png",
-	"img/characters/Evelyn/ngggg....png",
-	"img/characters/Evelyn/normal.png",
-	"img/characters/Evelyn/tongue.png",
-	"img/characters/Evelyn/uhh.png",
-	"img/characters/Evelyn/wink.png",
-
-	// UI Images
-	"img/ui/main-screen.svg"
+	'favicon.ico',
+	'assets/icons/icon_48x48.png',
+	'assets/icons/icon_60x60.png',
+	'assets/icons/icon_70x70.png',
+	'assets/icons/icon_76x76.png',
+	'assets/icons/icon_96x96.png',
+	'assets/icons/icon_120x120.png',
+	'assets/icons/icon_128x128.png',
+	'assets/icons/icon_150x150.png',
+	'assets/icons/icon_152x152.png',
+	'assets/icons/icon_167x167.png',
+	'assets/icons/icon_180x180.png',
+	'assets/icons/icon_192x192.png',
+	'assets/icons/icon_310x150.png',
+	'assets/icons/icon_310x310.png',
+	'assets/icons/icon_512x512.png'
 ];
 
-self.addEventListener("install", function (event) {
-	event.waitUntil(
-		caches.open(`${name}-v${version}`).then(function (cache) {
-			return cache.addAll(files);
+self.addEventListener ('install', (event) => {
+	self.skipWaiting ();
+	event.waitUntil (
+		caches.open (`${name}-v${version}`).then ((cache) => {
+			return cache.addAll (files);
 		})
 	);
 });
 
-self.addEventListener("activate", function (event) {
-	event.waitUntil(
-		caches.keys().then(function (keyList) {
-			return Promise.all(keyList.map(function (key) {
+self.addEventListener ('activate', (event) => {
+	event.waitUntil (
+		caches.keys ().then ((keyList) => {
+			return Promise.all (keyList.map ((key) => {
 				if (key !== `${name}-v${version}`) {
-					return caches.delete(key);
+					return caches.delete (key);
 				}
 			}));
 		})
 	);
-
-	return self.clients.claim();
+	return self.clients.claim ();
 });
 
-self.addEventListener("fetch", function (event) {
-	if (event.request.method !== "GET") {
+self.addEventListener ('fetch', (event) => {
+
+	if (event.request.method !== 'GET') {
 		return;
 	}
 
-	event.respondWith(
-		caches.match(event.request).then(function (cached) {
-			var networked = fetch(event.request)
-							.then(fetchedFromNetwork, unableToResolve)
-							.catch(unableToResolve);
-			return cached || networked;
-
+	event.respondWith (
+		caches.match (event.request).then ((cached) => {
 			function fetchedFromNetwork (response) {
-				var cacheCopy = response.clone();
+				const cacheCopy = response.clone ();
 
-				caches.open(`${name}-v${version}`).then(function add (cache) {
-					cache.put(event.request, cacheCopy);
+				caches.open (`${name}-v${version}`).then (function add (cache) {
+					cache.put (event.request, cacheCopy);
 				});
-
 				return response;
 			}
 
 			function unableToResolve () {
-				return new Response("<h1>Service Unavailable</h1>", {
+				return new Response (`
+					<!DOCTYPE html><html lang=en><title>Bad Request</title><meta charset=UTF-8><meta content="width=device-width,initial-scale=1"name=viewport><style>body,html{width:100%;height:100%}body{text-align:center;color:#545454;margin:0;display:flex;justify-content:center;align-items:center;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Open Sans","Fira Sans","Droid Sans","Helvetica Neue",sans-serif}h1,h2{font-weight:lighter}h1{font-size:4em}h2{font-size:2em}</style><div><h1>Service Unavailable</h1><h2>Sorry, the server is currently unavailable or under maintenance, try again later.</h2></div>
+				`, {
 					status: 503,
-					statusText: "Service Unavailable",
-					headers: new Headers({
-						"Content-Type": "text/html"
+					statusText: 'Service Unavailable',
+					headers: new Headers ({
+						'Content-Type': 'text/html'
 					})
 				});
 			}
+
+			const networked = fetch (event.request)
+				.then (fetchedFromNetwork, unableToResolve)
+				.catch (unableToResolve);
+
+			return cached || networked;
 		})
 	);
 });
