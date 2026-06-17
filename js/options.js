@@ -126,7 +126,7 @@ monogatari.settings({
 	// - RemoteStorage: The information will be sent and retrieved from a given
 	//					URL Endpoint providing a REST API.
 	'Storage': {
-		'Adapter': 'LocalStorage',
+		'Adapter': 'IndexedDB',
 		'Store': 'GameData',
 		'Endpoint': ''
 	},
@@ -141,7 +141,16 @@ monogatari.settings({
 	// These features are unfinished and unstable, chances are they will still
 	// go through a lot of changes and functionality won't have any backward
 	// compatibility rendering your save files unusable on many cases.
-	'ExperimentalFeatures': false
+	'ExperimentalFeatures': false,
+
+	// Whether a screenshot of the game should be captured and stored alongside
+	// each save slot, to be shown as a thumbnail on the save/load screens.
+	// The capture works by inlining every image currently on screen, so any
+	// background or character image served from a different origin must send
+	// CORS headers (Access-Control-Allow-Origin); cross-origin assets without
+	// CORS are captured as black. Same-origin assets always work.
+	// Default: false
+	'Screenshots': true
 });
 
 // Initial Settings

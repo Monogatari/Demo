@@ -2,7 +2,7 @@
 
 // Define the messages used in the game.
 monogatari.action ('message').messages ({
-	
+
 });
 
 // Define the notifications used in the game
@@ -16,7 +16,7 @@ monogatari.action ('notification').notifications ({
 
 // Define the Particles JS Configurations used in the game
 monogatari.action ('particles').particles ({
-	universe: 
+	universe:
 	{
 	  "autoPlay": true,
 	  "background": {
@@ -517,7 +517,7 @@ monogatari.action ('particles').particles ({
 		  "value": true
 		}
 	  }
-	}	
+	}
 });
 
 // Define the canvas objects used in the game
@@ -598,18 +598,21 @@ monogatari.characters ({
 	}
 });
 
-const { Storage } = monogatari;
-
 monogatari.script ({
 	// The game starts here.
 	'English':{
 		'Start':[
 			{'Conditional': {
-				'Condition': function () {
-					return Storage.get ('played') == 'true';
+				'Condition': async function () {
+					try {
+						const persistent = await this.Storage.get ('persistent');
+						return persistent && persistent.played === true;
+					} catch (e) {
+						return false;
+					}
 				},
 				'True': {'Choice':{
-					'Text': 'It seems you have already played the demo, do you wish to skip the introduction?',
+					'Dialog': 'It seems you have already played the demo, do you wish to skip the introduction?',
 					'Skip':{
 						'Text': 'Skip',
 						'Do': 'jump Topics'
@@ -632,9 +635,7 @@ monogatari.script ({
 					return input.trim().length > 0;
 				},
 				'Save': function (input) {
-					Storage.set ('PlayerName', input);
-					storage.player.name = input;
-					this.storage ({ player: { name: input } });	
+					this.storage ({ player: { name: input } });
 					return true;
 				},
 				'Warning': 'You must enter a name!'
@@ -729,7 +730,6 @@ monogatari.script ({
 					return input.trim().length > 0;
 				},
 				'Save': function (input) {
-					Storage.set ('yui_name', input);
 					this.storage ({ yui_name: input });
 					return true;
 				},
@@ -760,11 +760,11 @@ monogatari.script ({
 			'show scene morning',
 			'show character y smiling with fadeIn',
 			function () {
-				Storage.set ('played', true);
+				this.Storage.set ('persistent', { played: true });
 				return true;
 			},
 			{'Choice':{
-				'Text':	'Let\'s see, what do you want to know about?',
+				'Dialog':	'Let\'s see, what do you want to know about?',
 				'Animations':{
 					'Text': 'Animations',
 					'Do': 'jump Animations'
@@ -924,11 +924,17 @@ monogatari.script ({
 
 		'Start':[
 			{'Conditional': {
-				'Condition': function () {
-					return Storage.get ('played') == 'true';
+				'Condition': async function () {
+					try {
+            const persistent = await this.Storage.get('persistent');
+
+						return persistent && persistent.played === true;
+					} catch (e) {
+						return false;
+					}
 				},
 				'True': {'Choice':{
-					'Text': 'Parece que ya has jugado el demo, ¿quieres saltarte la introducción?',
+					'Dialog': 'Parece que ya has jugado el demo, ¿quieres saltarte la introducción?',
 					'Skip':{
 						'Text': 'Saltarla',
 						'Do': 'jump Topics'
@@ -951,7 +957,6 @@ monogatari.script ({
 					return input.trim().length > 0;
 				},
 				'Save': function (input) {
-					Storage.set ('PlayerName', input);
 					this.storage ({ player: { name: input } });
 				},
 				'Warning': 'Debes introducir un nombre!'
@@ -1058,7 +1063,6 @@ monogatari.script ({
 					return input.trim().length > 0;
 				},
 				'Save': function (input) {
-					Storage.set ('yui_name', input);
 					this.storage ({ yui_name: input });
 				},
 				'Warning': 'Escoge un buen nombre para mi por favor.'
@@ -1088,11 +1092,11 @@ monogatari.script ({
 			'show scene morning',
 			'show character y smiling with fadeIn',
 			function () {
-				Storage.set ('played', true);
+				this.Storage.set ('persistent', { played: true });
 				return true;
 			},
 			{'Choice':{
-				'Text':	'Veamos, ¿sobre qué te interesa saber?',
+				'Dialog':	'Veamos, ¿sobre qué te interesa saber?',
 				'Animations':{
 					'Text': 'Animaciones',
 					'Do': 'jump Animations'
@@ -1239,7 +1243,7 @@ monogatari.script ({
 				this.storage({ playing: true });
 				return true;
 			},
-			'show scene Room',
+			'show scene afternoon',
 			'show character y happy with fadeIn',
 			'y Jugar una novela visual creada con Monogatari es una experiencia increíble.',
 			'y Si está en la web, no necesitas instalar nada, solo entrar a la página y jugar, tan simple como eso.',

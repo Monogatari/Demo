@@ -17,12 +17,10 @@
  * ===========================
 **/
 
-@import url(//fonts.googleapis.com/css?family=Lato);
-
 /* General Style */
 body {
 	background: #f7f6f6;
-	font-family: 'Lato', 'Open Sans', sans-serif;
+	font-family: 'Open Sans', sans-serif;
 }
 
 /* Simple Button styles*/
